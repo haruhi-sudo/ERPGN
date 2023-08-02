@@ -17,7 +17,9 @@ bash test.sh # test your model
 
 ## Preprocess Datasets and Models
 
-[**Pretrained Models**](https://drive.google.com/drive/u/0/folders/1gdXsWamuYtOHZhMVZVHwPviIeR--r8yr): bart_rc.pt (including the BART pre-trained model and a Discriminator for Relation Consistency Identification)
+[**Pretrained Models**](https://drive.google.com/drive/u/0/folders/1gdXsWamuYtOHZhMVZVHwPviIeR--r8yr): bart_rc.pt 
+
+The model consists of a BART pre-trained model and a Discriminator for Relation Consistency Identification.
 
 [**Datasets**](https://drive.google.com/drive/u/0/folders/1gdXsWamuYtOHZhMVZVHwPviIeR--r8yr): Xsum
 
