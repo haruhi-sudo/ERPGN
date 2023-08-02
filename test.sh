@@ -1,8 +1,8 @@
 python summarize.py \
-  --model-dir /model/aruhi/bart_base/cnn-dm \
-  --model-file checkpoint3.pt \
-  --src /data/aruhi/cnn_dailymail/test.source \
+  --model-dir /path/to/your/model \
+  --model-file checkpoint.pt \
+  --src /path/to/your/data/test.source \
   --out /output/test.txt \
-  --entity-file /data/aruhi/cnn_dailymail/cnn-dm-base/test.entity.source \
-  --triple-file /data/aruhi/cnn_dailymail/cnn-dm-base/test.bpe.triples.source \
+  --entity-file /path/to/your/entity/test.entity.source \
+  --triple-file /path/to/your/triple/test.bpe.triples.source \
 #   --xsum-kwargs

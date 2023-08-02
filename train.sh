@@ -3,14 +3,14 @@ WARMUP_UPDATES=500
 LR=3e-05
 MAX_TOKENS=2048
 UPDATE_FREQ=4
-BART_PATH=/model/aruhi/bart_base/bart.base/model.pt
+BART_PATH=/path/to/your/model/bart_rc.pt
 # fairseq-train
 
 CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7 python train.py \
-    /data/aruhi/cnn_dailymail/cnn-dm-base \
+    /path/to/your/data \
     --max-epoch 3 \
     --user-dir  src \
-    --save-dir  /model/aruhi/bart_base/cnn-dm\
+    --save-dir  /path/to/your/save \
     --restore-file $BART_PATH \
     --max-tokens $MAX_TOKENS \
     --task faithful_summarization \
