@@ -158,7 +158,7 @@ class SummarizationConfig(FairseqDataclass):
         default=True, metadata={"help": "evaluation with BLEU scores"}
     )
     eval_bleu_args: Optional[str] = field(
-        default='{"beam":6, "lenpen":1.0, "max_len_b":60, "min_len":10, "no_repeat_ngram_size":3}',
+        default='{"beam":6, "lenpen":1.0, "max_len_b":60, "min_len":10, "no_repeat_ngram_size":3, "match_source_len":1}',
         metadata={
             "help": 'generation args for BLUE scoring, e.g., \'{"beam": 4, "lenpen": 0.6}\', as JSON string'
         },

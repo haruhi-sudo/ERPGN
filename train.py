@@ -290,10 +290,10 @@ def train(
     num_updates = trainer.get_num_updates()
     logger.info("Start iterating over samples")
     for i, samples in enumerate(progress):
-#         end_of_epoch = not itr.has_next()
-#         valid_losses, should_stop = validate_and_save(
-#             cfg, trainer, task, epoch_itr, valid_subsets, end_of_epoch,
-#         )
+        # end_of_epoch = not itr.has_next()
+        # valid_losses, should_stop = validate_and_save(
+        #     cfg, trainer, task, epoch_itr, valid_subsets, end_of_epoch,
+        # )
         with metrics.aggregate("train_inner"), torch.autograd.profiler.record_function(
             "train_step-%d" % i
         ):
@@ -397,7 +397,7 @@ def validate_and_save(
         and not cfg.dataset.disable_validation
         and num_updates >= cfg.dataset.validate_after_updates
     )
-#     do_validate = True
+    # do_validate = True
     # Validate
     valid_losses = [None]
     if do_validate:

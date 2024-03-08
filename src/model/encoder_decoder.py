@@ -155,10 +155,10 @@ class TransformerPointerGeneratorDecoder(TransformerDecoder):
             triples_mask = torch.where(triples_encoder_out['encoder_padding_mask'][0]==True, 1, 0)
             triples_mask[:,-1] = 1
             attn_mask = torch.cat((src_entity_mask,triples_mask),dim=1)
-            attn.masked_fill_(attn_mask[:,None,:].expand(attn.shape)==1,0)
-            attn_sum = attn.sum(dim=-1)[:,:,None].expand(attn.shape)
-            attn /= attn_sum
-            # attn = F.softmax(attn.float().masked_fill(attn_mask[:,None,:].expand(attn.shape)==1,-1e9),dim=-1)
+            # attn.masked_fill_(attn_mask[:,None,:].expand(attn.shape)==1,0)
+            # attn_sum = attn.sum(dim=-1)[:,:,None].expand(attn.shape)
+            # attn /= attn_sum
+            attn = F.softmax(attn.float().masked_fill(attn_mask[:,None,:].expand(attn.shape)==1,-1e9),dim=-1)
 
             # get the max entity probs in vocabulary distribution
             src_entity_mask = torch.where(
@@ -279,9 +279,10 @@ class TransformerPointerGeneratorDecoder(TransformerDecoder):
         triples_mask = torch.where(triples_encoder_out['encoder_padding_mask'][0]==True, 1, 0)
         triples_mask[:,-1] = 1
         attn_mask = torch.cat((src_entity_mask,triples_mask),dim=1)
-        attn.masked_fill_(attn_mask[:,None,:].expand(attn.shape)==1,0)
-        attn_sum = attn.sum(dim=-1)[:,:,None].expand(attn.shape)
-        attn /= attn_sum
+        # attn.masked_fill_(attn_mask[:,None,:].expand(attn.shape)==1,0)
+        # attn_sum = attn.sum(dim=-1)[:,:,None].expand(attn.shape)
+        # attn /= attn_sum
+        attn = F.softmax(attn.float().masked_fill(attn_mask[:,None,:].expand(attn.shape)==1,-1e9),dim=-1)
 
         gen_dists = self.get_normalized_probs_scriptable(
             (logits, None), log_probs=False, sample=None

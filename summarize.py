@@ -1,4 +1,3 @@
-from scipy.fftpack import idctn
 import torch
 from src.model.bart_pg import BARTPointModel 
 import argparse

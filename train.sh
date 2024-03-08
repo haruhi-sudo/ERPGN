@@ -22,7 +22,7 @@ CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7 python train.py \
     --share-decoder-input-output-embed \
     --required-batch-size-multiple 1 \
     --arch bart_pg_base\
-    --fp16 --criterion my_cross_entropy \
+    --criterion my_cross_entropy \
     --label-smoothing 0.1 \
     --dropout 0.1 --attention-dropout 0.1 \
     --weight-decay 0.01 --optimizer adam --adam-betas "(0.9, 0.999)" --adam-eps 1e-08 \
