@@ -2,6 +2,7 @@ from dataclasses import dataclass, field
 import json
 import logging
 import os
+import sys
 import torch
 from typing import Optional
 from argparse import Namespace
@@ -22,6 +23,9 @@ from .entity_dataset import EntityDataset
 
 bpe = get_encoder('encoder.json', 'vocab.bpe')
 logger = logging.getLogger(__name__)
+
+# This algorithm in calculate ROUGE is recursive, The max recursion depth may be - by default - order of magnitude lower.
+sys.setrecursionlimit(100 * 100 + 10)
 
 def load_entity_dataset(data_path):
     with open(data_path, 'r') as f:
@@ -279,10 +283,18 @@ class FaithfulSummarizationTask(FairseqTask):
         with torch.no_grad():
             loss, sample_size, logging_output = criterion(model, sample)
         if self.cfg.eval_bleu:
-            metrics = self._inference_with_bleu(self.sequence_generator, sample, model)
-            logging_output["ROUGE_L"] = metrics['rouge-l']['f']
-            logging_output["ROUGE_1"] = metrics['rouge-1']['f']
-            logging_output["ROUGE_2"] = metrics['rouge-2']['f']
+            try:
+                metrics = self._inference_with_bleu(self.sequence_generator, sample, model)
+                logging_output["ROUGE_L"] = metrics['rouge-l']['f']
+                logging_output["ROUGE_1"] = metrics['rouge-1']['f']
+                logging_output["ROUGE_2"] = metrics['rouge-2']['f']
+            except Exception as e:
+                logger.error(f'Error while calculating ROUGE: {e}')
+                logging_output["ROUGE_L"] = 0
+                logging_output["ROUGE_1"] = 0
+                logging_output["ROUGE_2"] = 0
+                return loss, sample_size, logging_output
+        
         return loss, sample_size, logging_output
 
     def reduce_metrics(self, logging_outputs, criterion):
